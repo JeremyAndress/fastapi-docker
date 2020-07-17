@@ -1,4 +1,12 @@
 FROM python:3.7
-RUN pip install fastapi uvicorn
-COPY ./app /app
+ENV ENVTYPE=local
+ENV PYTHONUNBUFFERED 1
+ENV APP_HOME=/home/app/web
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+
+ADD /requirements/$ENVTYPE.txt $APP_HOME
+
+RUN pip install -r /home/app/web/$ENVTYPE.txt; mkdir /log;
+COPY /src/ $APP_HOME
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
