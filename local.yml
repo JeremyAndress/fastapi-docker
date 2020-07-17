@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  django:
+    env_file: .env
+    build: 
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    restart: always
+    volumes:
+      - ./src:/home/app/web/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
