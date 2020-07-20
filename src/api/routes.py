@@ -1,7 +1,9 @@
 from fastapi import APIRouter
-
 router = APIRouter()
 
-@router.get("/")
-def firts():
-    return {"status": "ok"}
+@router.get("/CAB/testing")
+def firts(id: int):
+    return {
+        "id": id,
+        "status": "ok"
+    }

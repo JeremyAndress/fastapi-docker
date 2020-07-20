@@ -1,0 +1,12 @@
+{
+    "python.pythonPath": "env/bin/python3.6",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/__pycache__": true,
+        "**/env": true
+    }
+}
