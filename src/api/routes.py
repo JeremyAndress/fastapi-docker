@@ -5,5 +5,5 @@ router = APIRouter()
 def firts(id: int):
     return {
         "id": id,
-        "status": "ok"
+        "status": 200
     }
