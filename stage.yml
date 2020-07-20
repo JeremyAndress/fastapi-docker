@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  nginx:
+    env_file: .env
+    build: 
+      context: .
+      dockerfile: ./compose/stage/nginx.Dockerfile
+    restart: always
+    ports:
+      - "$EX_PORT_NGINX:80"
+    volumes:
+      - ./nginx/site.conf:/etc/nginx/conf.d/default.conf
+  core:
+    env_file: .env
+    build: 
+      context: .
+      dockerfile: ./compose/stage/core.Dockerfile
+    restart: always
+    volumes:
+      - ./src:/home/app/web/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"

@@ -5,7 +5,7 @@ services:
     env_file: .env
     build: 
       context: .
-      dockerfile: ./compose/local/nginx/Dockerfile
+      dockerfile: ./compose/local/nginx.Dockerfile
     restart: always
     ports:
       - "$EX_PORT_NGINX:80"
@@ -15,7 +15,7 @@ services:
     env_file: .env
     build: 
       context: .
-      dockerfile: ./compose/local/core/Dockerfile
+      dockerfile: ./compose/local/core.Dockerfile
     restart: always
     volumes:
       - ./src:/home/app/web/
