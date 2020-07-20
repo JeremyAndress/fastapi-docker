@@ -62,8 +62,6 @@ target/
 # pyenv
 .python-version
 
-
-
 # Environments
 .venv
 venv/
@@ -134,10 +132,8 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-
 ### Linux template
 *~
-
 # temporary files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
 
@@ -150,17 +146,12 @@ typings/
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
-
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-
-
-
 
 ### Windows template
 # Windows thumbnail cache files
@@ -185,7 +176,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
 
 ### macOS template
 # General
@@ -214,7 +204,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
 
 ### SublimeText template
 # Cache files for Sublime Text
@@ -248,7 +237,6 @@ bh_unicode_properties.cache
 # https://packagecontrol.io/packages/sublime-github
 GitHub.sublime-settings
 
-
 ### Vim template
 # Swap
 [._]*.s[a-v][a-z]
@@ -265,7 +253,6 @@ Session.vim
 # Auto-generated tag files
 tags
 
-
 # DB
 db.sqlite3
 
@@ -274,7 +261,6 @@ db.sqlite3
 class/media/
 
 .pytest_cache/
-
 
 .ipython/
 .env
