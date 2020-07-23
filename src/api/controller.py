@@ -11,8 +11,14 @@ def get_booking_info(job_id:int):
     return response
 
 def change_job_status_admin(job:JobUpdateStatus):
-    print(job)
     endpoint = 'change_job_status_admin'
+    data = job.json()
+    print(data)
+    headers = {
+        'content-type': "application/json",
+        'cache-control': "no-cache"
+    }
+    payload = "{\n\t\"access_token\":\"173b2181da40801736acc8ac14df23c4\"\n}"
     url = f'{url_transvip}{endpoint}'
-    response = requests.post(url)
+    response = requests.post(url,data=data, headers=headers)
     return response

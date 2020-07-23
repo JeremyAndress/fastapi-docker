@@ -8,8 +8,8 @@ class JobBase(BaseModel):
 
 class JobUpdateStatus(JobBase):
     job_status: int
-    job_id: str
+    job_id: int
     cancellation_reason: str
     cancellation_description: str
     cancellation_reason_id: int
-    cancelled_by:int
+    cancelled_by:str
