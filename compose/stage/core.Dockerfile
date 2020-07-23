@@ -8,8 +8,6 @@ ENV APP_HOME=/home/app/web
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-# export https_proxy=http://10.46.0.210:3128; \
-#     export http_proxy=http://10.46.0.210:3128; \
 RUN apk update && apk add postgresql-dev gcc make \
     python3-dev musl-dev
 ADD /requirements/$ENVTYPE.txt $APP_HOME
