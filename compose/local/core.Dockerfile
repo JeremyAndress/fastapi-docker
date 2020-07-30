@@ -11,4 +11,4 @@ RUN apk update && apk add postgresql-dev gcc make \
 ADD /requirements/$ENVTYPE.txt $APP_HOME
 RUN pip install -r /home/app/web/$ENVTYPE.txt; mkdir /log;
 COPY /src/ $APP_HOME
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "main:app","--reload", "--host", "0.0.0.0", "--port", "8080"]
