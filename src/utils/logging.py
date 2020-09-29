@@ -1,5 +1,4 @@
 import os
-import uuid
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -16,10 +15,4 @@ logging.basicConfig(
     datefmt='%d/%m/%Y %H:%M:%S'
 )
 
-logger = logging.getLogger("launchpad")
-
-def gene_extra(ms):
-    return {
-        'id':str(uuid.uuid4()),
-        'msisdn': ms
-    }
+logger = logging.getLogger("fastapiauth")
