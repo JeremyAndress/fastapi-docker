@@ -8,7 +8,7 @@ LOG_FILENAME_INFO = BASE_DIR+'/logs/info.log'
 logging.basicConfig(
     handlers=[
         logging.StreamHandler(),
-        RotatingFileHandler(LOG_FILENAME_INFO, maxBytes=20000, backupCount=10)
+        RotatingFileHandler(LOG_FILENAME_INFO, maxBytes=20000 * 15000, backupCount=10)
     ],
     level=logging.INFO, 
     format= '[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
