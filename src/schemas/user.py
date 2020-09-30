@@ -9,3 +9,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
 
+class UserList(UserCreate):
+    id: int
+    class Config:
+        orm_mode = True

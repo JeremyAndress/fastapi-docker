@@ -2,13 +2,14 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from db.session import get_db
-from schemas.user import UserCreate
+from schemas.user import UserCreate,UserList
 from schemas.response import Response_SM
 from schemas.token import Token
 from core.security import create_access_token
 from api.deps import get_current_active_user
 from .controller import (
-    get_by_email, create_user, authenticate
+    get_by_email, create_user, authenticate,
+    get_all_user_cn
 )
 router = APIRouter()
 
@@ -27,7 +28,17 @@ def login(db: Session = Depends(get_db),form_data: OAuth2PasswordRequestForm = D
         "token_type": "bearer",
     }
 
-@router.get("/get_user_by_email/")
+@router.get("/get_user_by_email/",response_model=UserList)
 def user_get(db: Session = Depends(get_db),current_user: UserCreate = Depends(get_current_active_user)):
     user = get_by_email(db,'prueba')
-    return {"user":user}
+    print(f'user {user}')
+    print(dir(user))
+    return user
+
+@router.get("/get_all_user/")
+def get_all_user(
+    db: Session = Depends(get_db),
+    current_user: UserCreate = Depends(get_current_active_user)
+):
+    user = get_all_user_cn(db)
+    return user

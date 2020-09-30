@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from utils.logging import logger
+from utils.pagination import paginate
 from models.user import User
 from schemas.user import UserCreate
 from schemas.response import Response_SM
@@ -33,3 +34,6 @@ def create_user(db: Session,obj_in: UserCreate):
         logger.error(f'error {e}')
     return arsene
 
+def get_all_user_cn(db: Session):
+    user  = paginate(db.query(User),1,2)
+    return user
