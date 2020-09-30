@@ -6,10 +6,10 @@ from schemas.user import UserCreate
 from schemas.response import Response_SM
 from schemas.token import Token
 from core.security import create_access_token
+from api.deps import get_current_active_user
 from .controller import (
     get_by_email, create_user, authenticate
 )
-from sqlalchemy.exc import SQLAlchemyError
 router = APIRouter()
 
 @router.post("/user_create/",response_model=Response_SM)
@@ -27,8 +27,8 @@ def login(db: Session = Depends(get_db),form_data: OAuth2PasswordRequestForm = D
         "token_type": "bearer",
     }
 
-# @router.get("/get_user_by_email/")
-# def user_get(db: Session = Depends(get_db),current_user: UserCreate = Depends(get_current_active_user)):
-#     user = get_by_email(db,'prueba')
-#     #get_current_user(db,'sdlkjsdfj')
-#     return {"user":user}
+@router.get("/get_user_by_email/")
+def user_get(db: Session = Depends(get_db),current_user: UserCreate = Depends(get_current_active_user)):
+    user = get_by_email(db,'prueba')
+    #get_current_user(db,'sdlkjsdfj')
+    return {"user":user}
