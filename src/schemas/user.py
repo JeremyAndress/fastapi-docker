@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import Optional,List
 from pydantic import BaseModel
-
+from .response import Pagination
 # Shared properties
 class UserBase(BaseModel):
     username: Optional[str] = None
@@ -11,5 +11,10 @@ class UserCreate(UserBase):
 
 class UserList(UserCreate):
     id: int
+    class Config:
+        orm_mode = True
+
+class UserListPag(Pagination):
+    data: List[UserList]
     class Config:
         orm_mode = True

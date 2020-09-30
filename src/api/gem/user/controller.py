@@ -34,6 +34,6 @@ def create_user(db: Session,obj_in: UserCreate):
         logger.error(f'error {e}')
     return arsene
 
-def get_all_user_cn(db: Session):
-    user  = paginate(db.query(User),1,2)
+def get_all_user_cn(page,db: Session):
+    user  = paginate(db.query(User),page,2)
     return user

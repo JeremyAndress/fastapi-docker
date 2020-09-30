@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from db.session import get_db
-from schemas.user import UserCreate,UserList
+from schemas.user import UserCreate,UserList, UserListPag
 from schemas.response import Response_SM
 from schemas.token import Token
 from core.security import create_access_token
@@ -35,10 +35,11 @@ def user_get(db: Session = Depends(get_db),current_user: UserCreate = Depends(ge
     print(dir(user))
     return user
 
-@router.get("/get_all_user/")
+@router.get("/get_all_user/",response_model=UserListPag)
 def get_all_user(
+    page:int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_current_active_user)
 ):
-    user = get_all_user_cn(db)
+    user = get_all_user_cn(page,db)
     return user
