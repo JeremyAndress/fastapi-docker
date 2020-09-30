@@ -10,15 +10,15 @@ engine = create_engine(
     settings.SQLALCHEMY_DATABASE_URI, pool_pre_ping=True,
      connect_args={'connect_timeout': 3}
 )
-SessionLocal = sessionmaker(autocommit=False, autoflush=False)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False,bind=engine)
 
 def get_db():
     try:
-        conn = engine.connect()
-        db = SessionLocal(bind=conn)
+        # conn = engine.connect()
+        # bind=conn
+        db = SessionLocal()
         yield db
     except Exception as e:
         logger.error(f'Error db {e}')
     finally:
         db.close()
-        conn.dispose()
