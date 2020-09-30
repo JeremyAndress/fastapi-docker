@@ -24,15 +24,5 @@ services:
       options:
         max-size: "5m"
         max-file: "10"
-  db:
-    env_file: .env
-    image: postgres:13-alpine
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "5m"
-        max-file: "10"
+
         

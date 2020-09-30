@@ -8,8 +8,7 @@ ENV APP_HOME=/home/app/web
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-RUN apk update && apk add postgresql-dev gcc make \
-    python3-dev musl-dev
+RUN apk update && apk add --no-cache mariadb-dev build-base gcc make python3-dev
 ADD /requirements/$ENVTYPE.txt $APP_HOME
 RUN pip install -r /home/app/web/$ENVTYPE.txt; mkdir /log;
 COPY /src/ $APP_HOME

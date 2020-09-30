@@ -1,7 +1,5 @@
 from fastapi import APIRouter
+from .gem.user import user
 
 router = APIRouter()
-
-@router.get("/yyn/")
-def firts(id: int):
-    return {'id':id}
+router.include_router(user.router, tags=["user"])
