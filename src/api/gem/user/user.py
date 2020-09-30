@@ -3,14 +3,15 @@ from fastapi import APIRouter, Depends, HTTPException
 # from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
 from db.session import get_db
 from schemas.user import UserCreate
+from schemas.response import Response_SM
 from .controller import create_user, authenticate
 from sqlalchemy.exc import SQLAlchemyError
 router = APIRouter()
 
-@router.post("/user_create/")
+@router.post("/user_create/",response_model=Response_SM)
 def user_create(user:UserCreate, db:Session = Depends(get_db)):
-    user = create_user(db,user)
-    return {"user":user}
+    response = create_user(db,user)
+    return response
 
 # @app.post("/login/")
 # def login(db: Session = Depends(get_db),form_data: OAuth2PasswordRequestForm = Depends()):

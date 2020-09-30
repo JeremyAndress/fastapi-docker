@@ -14,11 +14,9 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False,bind=engine)
 
 def get_db():
     try:
-        # conn = engine.connect()
-        # bind=conn
         db = SessionLocal()
         yield db
     except Exception as e:
-        logger.error(f'Error db {e}')
+        logger.error(f'database error - {e}')
     finally:
         db.close()
