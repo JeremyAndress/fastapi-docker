@@ -17,7 +17,7 @@ def authenticate(db: Session,username: str, password: str):
     return user
 
 def create_user(db: Session,obj_in: UserCreate):
-    arsene: Response_SM = {'status':False,'result': '...'}
+    arsene =  Response_SM(status=False,result= '...')
     try:
         db_obj = User(
             username=obj_in.username,
@@ -26,10 +26,10 @@ def create_user(db: Session,obj_in: UserCreate):
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
-        arsene['status'] = True if db_obj.id else False
-        arsene['result'] = 'success'
+        arsene.status = True if db_obj.id else False
+        arsene.result = 'success'
     except Exception as e:
-        arsene['result'] = f'error {e}'
+        arsene.result = f'error {e}'
         logger.error(f'error {e}')
     return arsene
 
