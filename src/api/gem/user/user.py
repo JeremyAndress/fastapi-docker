@@ -30,5 +30,4 @@ def login(db: Session = Depends(get_db),form_data: OAuth2PasswordRequestForm = D
 @router.get("/get_user_by_email/")
 def user_get(db: Session = Depends(get_db),current_user: UserCreate = Depends(get_current_active_user)):
     user = get_by_email(db,'prueba')
-    #get_current_user(db,'sdlkjsdfj')
     return {"user":user}

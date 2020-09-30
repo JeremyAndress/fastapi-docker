@@ -6,6 +6,7 @@ from db.session import get_db
 from core.config import settings
 from schemas.user import UserCreate
 from schemas.token import TokenData
+from utils.logging import logger
 from .gem.user.controller import get_by_email
 
 reusable_oauth2 = OAuth2PasswordBearer(
@@ -27,7 +28,7 @@ def get_current_user(
             raise credentials_exception
         token_data = TokenData(username=username)
     except JWTError as e:
-        print(f'error {e}')
+        logger.error(f'error {e}')
         raise credentials_exception
     user = get_by_email(db, username=token_data.username)
     if user is None:
