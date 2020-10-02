@@ -1,7 +1,6 @@
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status,Depends
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import HTTPException, status,Depends,Header
 from db.session import get_db
 from core.config import settings
 from schemas.user import UserCreate
@@ -9,12 +8,11 @@ from schemas.token import TokenData
 from utils.logging import logger
 from .gem.user.controller import get_by_email
 
-reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_V1_STR}/login/"
-)
+def get_token_bearer(token: str = Header(...)):
+    return token
 
 def get_current_user(
-    db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
+    token: str = Depends(get_token_bearer),db: Session = Depends(get_db)
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
