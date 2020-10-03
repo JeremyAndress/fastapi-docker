@@ -6,8 +6,11 @@ class UserBase(BaseModel):
     username: Optional[str] = None
 
 # Properties to receive via API on creation
-class UserCreate(UserBase):
+class Login(UserBase):
     password: str
+
+class UserCreate(Login):
+    rol_id: Optional[int]
 
 class UserList(UserCreate):
     id: int

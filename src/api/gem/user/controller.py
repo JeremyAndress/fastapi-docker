@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from utils.logging import logger
 from utils.pagination import paginate
 from models.user import User
+# from models.rol import Rol
 from schemas.user import UserCreate
 from schemas.response import Response_SM
 from core.security import verify_password,get_password_hash
@@ -23,6 +24,7 @@ def create_user(db: Session,obj_in: UserCreate):
         db_obj = User(
             username=obj_in.username,
             password=get_password_hash(obj_in.password),
+            rol_id=obj_in.rol_id
         )
         db.add(db_obj)
         db.commit()
