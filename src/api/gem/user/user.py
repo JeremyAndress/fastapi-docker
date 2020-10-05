@@ -8,7 +8,7 @@ from core.security import create_access_token
 from api.deps import get_current_active_user,get_admin_user
 from .controller import (
     get_by_email, create_user, authenticate,
-    get_all_user_cn
+    get_all_user_cn, delete_user_cn
 )
 router = APIRouter()
 
@@ -33,7 +33,16 @@ def login(user:Login,db: Session = Depends(get_db)):
 def get_all_user(
     page:int,
     db: Session = Depends(get_db),
-    current_user: UserCreate = Depends(get_admin_user),
+    current_user: UserCreate = Depends(get_admin_user)
 ):
     user = get_all_user_cn(page,db)
     return user
+
+@router.delete("/delete_user/",response_model=Response_SM)
+def delete_user(
+    id:int,
+    db: Session = Depends(get_db),
+    current_user: UserCreate = Depends(get_admin_user)
+):
+    response = delete_user_cn(id,db)
+    return response

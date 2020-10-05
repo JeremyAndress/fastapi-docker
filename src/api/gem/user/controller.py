@@ -39,3 +39,14 @@ def create_user(db: Session,obj_in: UserCreate):
 def get_all_user_cn(page,db: Session):
     user  = paginate(db.query(User),page,2)
     return user
+
+def delete_user_cn(id:int,db:Session):
+    arsene =  Response_SM(status=False,result= '...')
+    try:
+        user = db.query(User).filter(User.id == id).delete()
+        arsene.status = True if user else False
+        arsene.result = 'success' if user else 'user does not exist'
+    except Exception as e:
+        arsene.result = f'error {e}'
+        logger.error(f'error {e}')
+    return arsene
