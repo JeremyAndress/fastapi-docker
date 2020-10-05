@@ -7,7 +7,7 @@ from schemas.response import Response_SM
 from schemas.rol import ListRol,RolBase,Rol
 from .controller import (
     get_all_rol_cn,create_rol_cn,
-    update_rol_cn
+    update_rol_cn,delete_rol_cn
 )
 router = APIRouter()
 
@@ -36,4 +36,13 @@ def update_rol(
     current_user: UserCreate = Depends(get_admin_user)
 ):
     response = update_rol_cn(rol,db)
+    return response
+
+@router.delete('/delete_rol/',response_model=Response_SM)
+def delete_rol(
+    id:int,
+    db: Session = Depends(get_db),
+    current_user: UserCreate = Depends(get_admin_user)
+):
+    response = delete_rol_cn(id,db)
     return response

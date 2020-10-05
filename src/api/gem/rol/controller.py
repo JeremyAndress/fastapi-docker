@@ -37,3 +37,16 @@ def update_rol_cn(rol:Rol_Update,db:Session):
         arsene.result = f'error {e}'
         logger.error(f'error {e}')
     return arsene
+
+def delete_rol_cn(id:int,db:Session):
+    arsene =  Response_SM(status=False,result= '...')
+    try:
+        rol_delete = db.query(Rol).filter(Rol.id == id).delete()
+        db.commit()
+        db.flush()
+        arsene.status = True if rol_delete else False
+        arsene.result = 'success' if rol_delete else 'rol does not exist'
+    except Exception as e:
+        arsene.result = f'error {e}'
+        logger.error(f'error {e}')
+    return arsene
