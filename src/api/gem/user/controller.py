@@ -3,7 +3,7 @@ from utils.logging import logger
 from utils.pagination import paginate
 from models.user import User
 # from models.rol import Rol
-from schemas.user import UserCreate
+from schemas.user import UserCreate,UserList
 from schemas.response import Response_SM
 from core.security import verify_password,get_password_hash
 
@@ -44,6 +44,25 @@ def delete_user_cn(id:int,db:Session):
     arsene =  Response_SM(status=False,result= '...')
     try:
         user = db.query(User).filter(User.id == id).delete()
+        db.commit()
+        db.flush()
+        arsene.status = True if user else False
+        arsene.result = 'success' if user else 'user does not exist'
+    except Exception as e:
+        arsene.result = f'error {e}'
+        logger.error(f'error {e}')
+    return arsene
+
+def update_user_cn(upd_user:UserList,db:Session):
+    arsene =  Response_SM(status=False,result= '...')
+    try:
+        user = db.query(User).filter(User.id == upd_user.id).update({
+            User.rol_id: upd_user.rol_id,
+            User.password: get_password_hash(upd_user.password),
+            User.username: upd_user.username
+        })
+        db.commit()
+        db.flush()
         arsene.status = True if user else False
         arsene.result = 'success' if user else 'user does not exist'
     except Exception as e:
