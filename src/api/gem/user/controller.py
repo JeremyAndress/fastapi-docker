@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from utils.logging import logger
 from utils.pagination import paginate
-from models.user import User
+from models import User
 # from models.rol import Rol
 from schemas.user import UserCreate,UserList
 from schemas.response import Response_SM
@@ -37,7 +37,7 @@ def create_user(db: Session,obj_in: UserCreate):
     return arsene
 
 def get_all_user_cn(page,db: Session):
-    user  = paginate(db.query(User),page,2)
+    user  = paginate(db.query(User),page,10)
     return user
 
 def delete_user_cn(id:int,db:Session):

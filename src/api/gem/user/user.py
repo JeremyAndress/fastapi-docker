@@ -5,7 +5,7 @@ from schemas.user import UserCreate,UserList, UserListPag,Login
 from schemas.response import Response_SM
 from schemas.token import TokenUser
 from core.security import create_access_token
-from api.deps import get_current_active_user,get_admin_user
+from api.deps import get_admin_user
 from .controller import (
     get_by_email, create_user, authenticate,
     get_all_user_cn, delete_user_cn,update_user_cn
