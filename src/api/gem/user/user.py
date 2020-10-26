@@ -12,7 +12,7 @@ from .controller import (
 )
 router = APIRouter()
 
-@router.post("/user_create/",response_model=Response_SM,tags=["user","admin"])
+@router.post("/user/user_create/",response_model=Response_SM,tags=["user","admin"])
 def user_create(user:UserCreate, db:Session = Depends(get_db)):
     response = create_user(db,user)
     return response
@@ -29,7 +29,7 @@ def login(user:Login,db: Session = Depends(get_db)):
         "rol_name": user.rol.name if user.rol else None
     }
 
-@router.get("/get_all_user/",response_model=UserListPag,tags=["admin"])
+@router.get("/user/get_all_user/",response_model=UserListPag,tags=["admin"])
 def get_all_user(
     page:int,
     db: Session = Depends(get_db),
@@ -38,7 +38,7 @@ def get_all_user(
     user = get_all_user_cn(page,db)
     return user
 
-@router.delete("/delete_user/",response_model=Response_SM,tags=["admin"])
+@router.delete("/user/delete_user/",response_model=Response_SM,tags=["admin"])
 def delete_user(
     id:int,
     db: Session = Depends(get_db),
@@ -47,7 +47,7 @@ def delete_user(
     response = delete_user_cn(id,db)
     return response
 
-@router.put("/update_user/",response_model=Response_SM,tags=["admin"])
+@router.put("/user/update_user/",response_model=Response_SM,tags=["admin"])
 def update_user(
     upd_user : UserList,
     db: Session = Depends(get_db),
