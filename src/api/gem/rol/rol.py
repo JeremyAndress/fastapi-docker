@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends,HTTPException
 from sqlalchemy.orm import Session
 from schemas.user import UserCreate
 from db.session import get_db
@@ -27,6 +27,8 @@ def create_rol(
     current_user: UserCreate = Depends(get_admin_user)
 ):
     response = create_rol_cn(rol,db)
+    if not response.status:
+        raise HTTPException(status_code=400, detail=response.result)
     return response
 
 @router.put('/rol/update_rol/',response_model=Response_SM)
@@ -36,6 +38,8 @@ def update_rol(
     current_user: UserCreate = Depends(get_admin_user)
 ):
     response = update_rol_cn(rol,db)
+    if not response.status:
+        raise HTTPException(status_code=400, detail=response.result)
     return response
 
 @router.delete('/rol/delete_rol/',response_model=Response_SM)
@@ -45,4 +49,6 @@ def delete_rol(
     current_user: UserCreate = Depends(get_admin_user)
 ):
     response = delete_rol_cn(id,db)
+    if not response.status:
+        raise HTTPException(status_code=400, detail=response.result)
     return response

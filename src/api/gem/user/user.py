@@ -45,6 +45,8 @@ def delete_user(
     current_user: UserCreate = Depends(get_admin_user)
 ):
     response = delete_user_cn(id,db)
+    if not response.status:
+        raise HTTPException(status_code=400, detail=response.result)
     return response
 
 @router.put("/user/update_user/",response_model=Response_SM,tags=["admin"])
@@ -54,4 +56,6 @@ def update_user(
     current_user: UserCreate = Depends(get_admin_user)
 ):
     response = update_user_cn(upd_user,db)
+    if not response.status:
+        raise HTTPException(status_code=400, detail=response.result)
     return response
