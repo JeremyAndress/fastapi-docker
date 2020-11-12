@@ -7,7 +7,7 @@ from schemas.token import TokenUser
 from core.security import create_access_token
 from api.deps import get_admin_user
 from .controller import (
-    get_by_email, create_user, authenticate,
+    create_user, authenticate,
     get_all_user_cn, delete_user_cn,update_user_cn
 )
 router = APIRouter()
