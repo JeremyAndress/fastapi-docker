@@ -1,4 +1,7 @@
-from test import client,Rol,TestingSessionLocal
+from test import (
+    client ,Rol ,
+    TestingSessionLocal ,engine,Base
+)
 
 def test_create_rol():
     db = TestingSessionLocal()
@@ -15,9 +18,40 @@ def test_create_user():
         '/api/v1/user/user_create/',
         json={
             "username":"jeremy",
-            "password":"password",
+            "password":"jeremy",
             "rol_id":1
         }
     )
     print(response.text)
     assert response.status_code == 200, response.text
+
+def test_login_user():
+    response = client.post(
+        '/api/v1/login/',
+        json={
+            "username":"jeremy",
+            "password":"jeremy"
+        }
+    )
+    assert response.status_code == 200, response.text
+    res_json = response.json()
+    assert res_json['access_token']
+    return res_json
+
+def test_get_all_user():
+    credentials = test_login_user()
+    print(f'credentials {credentials}')
+
+    response = client.get(
+        '/api/v1/user/get_all_user/?page=1',
+        headers={
+            "token": credentials['access_token']
+        }
+    )
+    print(f'response {response.text}')
+    assert response.status_code == 200, response.text
+    
+def test_clean_database():
+    for tbl in reversed(Base.metadata.sorted_tables):
+        print(tbl)
+        engine.execute(tbl.delete())
