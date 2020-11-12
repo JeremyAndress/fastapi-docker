@@ -15,6 +15,8 @@ router = APIRouter()
 @router.post("/user/user_create/",response_model=Response_SM,tags=["user","admin"])
 def user_create(user:UserCreate, db:Session = Depends(get_db)):
     response = create_user(db,user)
+    if not response.status:
+        raise HTTPException(status_code=400, detail=response.result)
     return response
 
 @router.post("/login/",response_model=TokenUser,tags=["user"])

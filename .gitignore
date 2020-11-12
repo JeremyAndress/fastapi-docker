@@ -255,7 +255,7 @@ tags
 
 # DB
 db.sqlite3
-
+test.db
 ### Project template
 
 class/media/
