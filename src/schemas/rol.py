@@ -1,6 +1,6 @@
-from .response import Pagination
-from typing import Optional, List
+from typing import List
 from pydantic import BaseModel
+from .response import Pagination
 
 class RolBase(BaseModel):
     name: str
