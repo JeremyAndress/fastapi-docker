@@ -41,7 +41,7 @@ def get_admin_user(
     if not user:
         raise credentials_exception
     rol = getattr(getattr(user,'rol'),'id',None) 
-    if rol is not 1:
+    if rol != 1:
         raise credentials_exception
     return user
 
