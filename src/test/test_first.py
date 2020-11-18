@@ -1,6 +1,6 @@
 from test import (
-    client ,Rol ,
-    TestingSessionLocal ,engine,Base
+    client, Rol,
+    TestingSessionLocal, engine, Base
 )
 
 def test_create_rol():
@@ -17,9 +17,9 @@ def test_create_user():
     response = client.post(
         '/api/v1/user/user_create/',
         json={
-            "username":"jeremy",
-            "password":"jeremy",
-            "rol_id":1
+            "username": "jeremy",
+            "password": "jeremy",
+            "rol_id": 1
         }
     )
     print(response.text)
@@ -29,8 +29,8 @@ def test_login_user():
     response = client.post(
         '/api/v1/login/',
         json={
-            "username":"jeremy",
-            "password":"jeremy"
+            "username": "jeremy",
+            "password": "jeremy"
         }
     )
     assert response.status_code == 200, response.text

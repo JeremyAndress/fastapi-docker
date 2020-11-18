@@ -6,7 +6,7 @@ class Response_SM(BaseModel):
     result: str
 
 class Pagination(BaseModel):
-    previous_page:Optional[int]
+    previous_page: Optional[int]
     next_page: Optional[int]
     total: Optional[int]
     pages: Optional[int]
