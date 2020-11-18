@@ -1,6 +1,6 @@
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status,Depends,Header
+from fastapi import HTTPException, status, Depends, Header
 from db.session import get_db
 from core.config import settings
 from schemas.user import UserCreate
@@ -27,7 +27,7 @@ def get_token_bearer(token: str = Header(...)):
     return token_data
 
 def get_current_user(
-    token_data: str = Depends(get_token_bearer),db: Session = Depends(get_db)
+    token_data: str = Depends(get_token_bearer), db: Session = Depends(get_db)
 ):
     user = get_by_email(db, username=token_data.username)
     if not user:
@@ -35,16 +35,15 @@ def get_current_user(
     return user
 
 def get_admin_user(
-    token_data: str = Depends(get_token_bearer),db: Session = Depends(get_db)
+    token_data: str = Depends(get_token_bearer), db: Session = Depends(get_db)
 ):
     user = get_by_email(db, username=token_data.username) or {}
     if not user:
         raise credentials_exception
-    rol = getattr(getattr(user,'rol'),'id',None) 
+    rol = getattr(getattr(user, 'rol'), 'id', None) 
     if rol != 1:
         raise credentials_exception
     return user
-
 
 def get_current_active_user(current_user: UserCreate = Depends(get_current_user)):
     if not current_user:
