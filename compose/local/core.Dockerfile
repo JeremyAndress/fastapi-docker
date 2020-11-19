@@ -5,6 +5,9 @@ ENV PYTHONUNBUFFERED 1
 ENV APP_HOME=/home/app/web
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
+# postgres depends   
+# apk update && apk add postgresql-dev gcc make \
+# python3-dev musl-dev ; \
 
 RUN apk update && apk add --no-cache mariadb-dev build-base gcc make python3-dev libffi-dev
 ADD /requirements/$ENVTYPE.txt $APP_HOME
