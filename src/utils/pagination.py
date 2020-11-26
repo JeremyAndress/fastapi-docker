@@ -1,5 +1,6 @@
 import math
 
+
 class Page(object):
 
     def __init__(self, items, page, page_size, total):
