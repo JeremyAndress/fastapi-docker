@@ -1,6 +1,3 @@
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
-
-from .rol import Rol # noqa: F401 
-from .user import User # noqa: F401 
- 
+from db.base_class import Base # noqa: F401, E261
+from .rol import Rol # noqa: F401, E261
+from .user import User # noqa: F401, E261
