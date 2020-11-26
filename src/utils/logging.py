@@ -10,8 +10,8 @@ logging.basicConfig(
         logging.StreamHandler(),
         RotatingFileHandler(LOG_FILENAME_INFO, maxBytes=20000 * 15000, backupCount=10)
     ],
-    level=logging.INFO, 
-    format= '[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
+    level=logging.INFO,
+    format='[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
     datefmt='%d/%m/%Y %H:%M:%S'
 )
 
