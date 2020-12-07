@@ -14,6 +14,7 @@ credentials_exception = HTTPException(
     headers={"WWW-Authenticate": "Bearer"},
 )
 
+
 def get_token_bearer(token: str = Header(...)):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
@@ -26,6 +27,7 @@ def get_token_bearer(token: str = Header(...)):
         raise credentials_exception
     return token_data
 
+
 def get_current_user(
     token_data: str = Depends(get_token_bearer), db: Session = Depends(get_db)
 ):
@@ -34,16 +36,18 @@ def get_current_user(
         raise credentials_exception
     return user
 
+
 def get_admin_user(
     token_data: str = Depends(get_token_bearer), db: Session = Depends(get_db)
 ):
     user = get_by_email(db, username=token_data.username) or {}
     if not user:
         raise credentials_exception
-    rol = getattr(getattr(user, 'rol'), 'id', None) 
+    rol = getattr(getattr(user, 'rol'), 'id', None)
     if rol != 1:
         raise credentials_exception
     return user
+
 
 def get_current_active_user(current_user: UserCreate = Depends(get_current_user)):
     if not current_user:
