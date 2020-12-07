@@ -5,12 +5,14 @@ from schemas.rol import RolBase, Rol as Rol_Update
 from schemas.response import Response_SM
 from models import Rol
 
-def get_all_rol_cn(page:int,db:Session):
-    rol  = paginate(db.query(Rol),page,10)
+
+def get_all_rol_cn(page: int, db: Session):
+    rol = paginate(db.query(Rol), page, 10)
     return rol
 
-def create_rol_cn(rol:RolBase,db:Session):
-    arsene =  Response_SM(status=False,result= '...')
+
+def create_rol_cn(rol: RolBase, db: Session):
+    arsene = Response_SM(status=False, result='...')
     try:
         rol_data = Rol(name=rol.name)
         db.add(rol_data)
@@ -23,11 +25,12 @@ def create_rol_cn(rol:RolBase,db:Session):
         logger.error(f'error {e}')
     return arsene
 
-def update_rol_cn(rol:Rol_Update,db:Session):
-    arsene =  Response_SM(status=False,result= '...')
+
+def update_rol_cn(rol: Rol_Update, db: Session):
+    arsene = Response_SM(status=False, result='...')
     try:
         rol_data = db.query(Rol).filter(Rol.id == rol.id).update({
-            Rol.name : rol.name
+            Rol.name: rol.name
         })
         db.commit()
         db.flush()
@@ -38,8 +41,9 @@ def update_rol_cn(rol:Rol_Update,db:Session):
         logger.error(f'error {e}')
     return arsene
 
-def delete_rol_cn(id:int,db:Session):
-    arsene =  Response_SM(status=False,result= '...')
+
+def delete_rol_cn(id: int, db: Session):
+    arsene = Response_SM(status=False, result='...')
     try:
         rol_delete = db.query(Rol).filter(Rol.id == id).delete()
         db.commit()

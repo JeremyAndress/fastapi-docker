@@ -6,7 +6,7 @@ from core.config import settings
 from schemas.user import UserCreate
 from schemas.token import TokenData
 from utils.logging import logger
-from .gem.user.controller import get_by_email
+from .api_v1.user.controller import get_by_email
 
 credentials_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
