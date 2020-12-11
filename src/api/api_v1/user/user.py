@@ -13,7 +13,7 @@ from .controller import (
 router = APIRouter()
 
 
-@router.post("/user/user_create/", response_model=Response_SM, tags=["user", "admin"])
+@router.post("/user/user_create/", response_model=Response_SM, tags=["user"])
 def user_create(user: UserCreate, db: Session = Depends(get_db)):
     response = create_user(db, user)
     if not response.status:
@@ -34,7 +34,7 @@ def login(user: Login, db: Session = Depends(get_db)):
     }
 
 
-@router.get("/user/get_all_user/", response_model=UserListPag, tags=["admin"])
+@router.get("/user/get_all_user/", response_model=UserListPag, tags=["user"])
 def get_all_user(
     page: int,
     db: Session = Depends(get_db),
@@ -44,7 +44,7 @@ def get_all_user(
     return user
 
 
-@router.delete("/user/delete_user/", response_model=Response_SM, tags=["admin"])
+@router.delete("/user/delete_user/", response_model=Response_SM, tags=["user"])
 def delete_user(
     id: int,
     db: Session = Depends(get_db),
@@ -56,7 +56,7 @@ def delete_user(
     return response
 
 
-@router.put("/user/update_user/", response_model=Response_SM, tags=["admin"])
+@router.put("/user/update_user/", response_model=Response_SM, tags=["user"])
 def update_user(
     upd_user: UserList,
     db: Session = Depends(get_db),
