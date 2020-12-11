@@ -1,6 +1,6 @@
 # [FastAPI Docker :rocket:](https://github.com/JeremyAndress/fastapi-docker)
 
-![Test](https://github.com/JeremyAndress/fastapi-docker/workflows/Test/badge.svg?branch=master)
+![Test](https://github.com/JeremyAndress/fastapi-docker/workflows/Test/badge.svg?branch=master) [![license](https://img.shields.io/github/license/peaceiris/actions-gh-pages.svg)](LICENSE) 
 
 ## Features :sparkles:
 - [FastAPI](https://fastapi.tiangolo.com/) framework.
