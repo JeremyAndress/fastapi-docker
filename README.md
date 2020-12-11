@@ -1,7 +1,10 @@
 # [FastAPI Docker :rocket:](https://github.com/JeremyAndress/fastapi-docker)
 
-## Features :sparkles:
 
+
+## Features :sparkles:
+- [FastAPI](https://fastapi.tiangolo.com/) framework.
+- Interactive API documentation
 - Full Docker integration.
 - Docker Compose integration.
 - Production ready Python web server using Uvicorn.
