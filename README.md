@@ -1,6 +1,6 @@
-# [FastApi Docker :mushroom:](https://github.com/JeremyAndress/fastapi-docker)
+# [FastApi Docker :rocket:](https://github.com/JeremyAndress/fastapi-docker)
 
-### Features :ghost:
+### Features :sparkles:
 
 - Full Docker integration.
 - Docker Compose integration.
@@ -9,3 +9,10 @@
 - JWT token authentication.
 - SQLAlchemy models
 - CORS (Cross Origin Resource Sharing).
+- Small utility to paginate SqlAlchemy queries.
+
+### Testing  :rotating_light:
+
+```python
+    pytest -s -v src/test
+```
