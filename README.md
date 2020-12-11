@@ -1,6 +1,6 @@
 # [FastAPI Docker :rocket:](https://github.com/JeremyAndress/fastapi-docker)
 
-
+[![Test](https://github.com/JeremyAndress/fastapi-docker/workflows/Test/badge.svg)](https://github.com/JeremyAndress/fastapi-docker/actions?query=workflow%3A%22Python+application%22)
 
 ## Features :sparkles:
 - [FastAPI](https://fastapi.tiangolo.com/) framework.
