@@ -59,6 +59,10 @@
 3. `docker-compose -f local.yml build`
 4. `docker-compose -f local.yml up -d`
 5. That's just all, api server is listen at https://localhost:8030/docs now
+
+You will see the automatic interactive API documentation (provided by Swagger UI):
+![Swagger UI](screenshots/ui.png)
+
 ## Testing  :rotating_light:
 
 ```python
