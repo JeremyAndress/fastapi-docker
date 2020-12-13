@@ -14,6 +14,11 @@
 - CORS (Cross Origin Resource Sharing).
 - Small utility to paginate SqlAlchemy queries.
 
+## Requirements :pushpin:
+- Docker :whale:
+- docker-compose :whale:
+- Python 3.6+ :snake: **To use without docker**
+
 ## Quick Start :seedling:
 
 ### Run FastAPI Docker :zap:  Local Development
