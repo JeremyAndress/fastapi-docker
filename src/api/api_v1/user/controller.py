@@ -11,6 +11,10 @@ def get_by_email(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
 
+def get_user_cn(db: Session, id: int):
+    return db.query(User).filter(User.id == id).first()
+
+
 def authenticate(db: Session, username: str, password: str):
     user = get_by_email(db, username=username)
     if not user:

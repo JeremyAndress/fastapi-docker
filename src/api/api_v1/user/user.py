@@ -7,12 +7,21 @@ from schemas.token import TokenUser
 from core.security import create_access_token
 from api.deps import get_admin_user
 from .controller import (
-    create_user, authenticate,
+    create_user, authenticate, get_user_cn,
     get_all_user_cn, delete_user_cn, update_user_cn
 )
 router = APIRouter()
 
 #Document
+
+@router.get("/user/{id}", response_model=UserList, tags=["user"])
+def user_get(
+    id: int, 
+    db: Session = Depends(get_db),
+    current_user: UserCreate = Depends(get_admin_user)
+):
+    user = get_user_cn(db, id)
+    return user
 
 @router.post("/user", response_model=Response_SM, tags=["user"])
 def user_create(user: UserCreate, db: Session = Depends(get_db)):
@@ -22,17 +31,7 @@ def user_create(user: UserCreate, db: Session = Depends(get_db)):
     return response
 
 
-@router.get("/users", response_model=UserListPag, tags=["user"])
-def get_all_user(
-    page: int,
-    db: Session = Depends(get_db),
-    current_user: UserCreate = Depends(get_admin_user)
-):
-    user = get_all_user_cn(page, db)
-    return user
-
-
-@router.delete("/user", response_model=Response_SM, tags=["user"])
+@router.delete("/user/{id}", response_model=Response_SM, tags=["user"])
 def delete_user(
     id: int,
     db: Session = Depends(get_db),
@@ -55,8 +54,18 @@ def update_user(
         raise HTTPException(status_code=400, detail=response.result)
     return response
 
-#Controller
+#Collection
 
+@router.get("/users", response_model=UserListPag, tags=["user"])
+def get_all_user(
+    page: int,
+    db: Session = Depends(get_db),
+    current_user: UserCreate = Depends(get_admin_user)
+):
+    user = get_all_user_cn(page, db)
+    return user
+
+#Controller
 
 @router.post("/login/", response_model=TokenUser, tags=["user"])
 def login(user: Login, db: Session = Depends(get_db)):

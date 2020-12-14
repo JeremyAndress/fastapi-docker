@@ -12,8 +12,8 @@ from .controller import (
 router = APIRouter()
 
 
-@router.get('/rol/get_all_rol/', response_model=ListRol)
-def get_all_rol(
+@router.get('/roles', response_model=ListRol)
+def get_all_roles(
     page: int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
@@ -22,8 +22,8 @@ def get_all_rol(
     return rol
 
 
-@router.post('/rol/create_rol/', response_model=Response_SM)
-def create_rol(
+@router.post('/role', response_model=Response_SM)
+def create_role(
     rol: RolBase,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
@@ -34,8 +34,8 @@ def create_rol(
     return response
 
 
-@router.put('/rol/update_rol/', response_model=Response_SM)
-def update_rol(
+@router.put('/role', response_model=Response_SM)
+def update_role(
     rol: Rol,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
@@ -46,8 +46,8 @@ def update_rol(
     return response
 
 
-@router.delete('/rol/delete_rol/', response_model=Response_SM)
-def delete_rol(
+@router.delete('/role', response_model=Response_SM)
+def delete_role(
     id: int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
