@@ -8,5 +8,5 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(25), unique=True)
     password = Column(String(255))
-    rol_id = Column(Integer, ForeignKey("rol.id", ondelete='cascade'), nullable=True)
+    rol_id = Column(Integer, ForeignKey("rol.id",onupdate='CASCADE' ,ondelete='RESTRICT'), nullable=True)
     rol = relationship("Rol")
