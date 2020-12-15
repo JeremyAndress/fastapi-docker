@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   nginx:
@@ -16,6 +16,9 @@ services:
     build: 
       context: .
       dockerfile: ./compose/stage/core.Dockerfile
+      args:
+        MYSQL_SERVER: ${MYSQL_SERVER}
+        POSTGRES_SERVER: ${POSTGRES_SERVER}
     restart: always
     volumes:
       - ./src:/home/app/web/

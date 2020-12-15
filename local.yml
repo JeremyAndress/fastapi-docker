@@ -18,6 +18,7 @@ services:
       dockerfile: ./compose/local/core.Dockerfile
       args:
         MYSQL_SERVER: ${MYSQL_SERVER}
+        POSTGRES_SERVER: ${POSTGRES_SERVER}
     restart: always
     volumes:
       - ./src:/home/app/web/
@@ -26,5 +27,3 @@ services:
       options:
         max-size: "5m"
         max-file: "10"
-
-        
