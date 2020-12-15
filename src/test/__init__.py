@@ -1,5 +1,4 @@
-import sys
-sys.path.append('../')
+from test import local_import
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker

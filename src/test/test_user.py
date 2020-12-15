@@ -1,9 +1,11 @@
+import pytest
 from test import (
     client, Rol,
     TestingSessionLocal, engine, Base
 )
 
-
+@pytest.mark.run(order=0)
+@pytest.mark.dependency
 def test_create_rol():
     db = TestingSessionLocal()
     rol_test = Rol(name='admin')
@@ -13,8 +15,10 @@ def test_create_rol():
     db.close()
     print(rol_test)
     assert rol_test.id, 'Error al crear rol'
- 
 
+
+@pytest.mark.run(order=1)
+@pytest.mark.dependency(depends=['test_create_rol'])
 def test_create_user():
     response = client.post(
         '/api/v1/user',
@@ -28,6 +32,7 @@ def test_create_user():
     assert response.status_code == 200, response.text
 
 
+@pytest.mark.dependency(depends=['test_create_user'])
 def test_login_user():
     response = client.post(
         '/api/v1/login/',
@@ -54,7 +59,6 @@ def test_get_all_user():
     )
     print(f'response {response.text}')
     assert response.status_code == 200, response.text
-
 
 
 def test_clean_database():
