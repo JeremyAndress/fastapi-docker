@@ -1,8 +1,11 @@
 import pytest
+from faker import Faker
 from test import (
     client, Rol,
     TestingSessionLocal, engine, Base
 )
+
+fake = Faker()
 
 @pytest.mark.run(order=0)
 @pytest.mark.dependency
@@ -32,6 +35,22 @@ def test_create_user():
     assert response.status_code == 200, response.text
 
 
+@pytest.mark.run(order=2)
+@pytest.mark.dependency(depends=['test_create_rol'])
+def test_create_multiple_user():
+    for i in range(10):
+        response = client.post(
+            '/api/v1/user',
+            json={
+                "username": fake.name(),
+                "password": fake.name(),
+                "rol_id": 1
+            }
+        )
+        print(response.text)
+        assert response.status_code == 200, response.text
+
+
 @pytest.mark.dependency(depends=['test_create_user'])
 def test_login_user():
     response = client.post(
@@ -53,6 +72,20 @@ def test_get_all_user():
 
     response = client.get(
         '/api/v1/users?page=1',
+        headers={
+            "token": credentials['access_token']
+        }
+    )
+    print(f'response {response.text}')
+    assert response.status_code == 200, response.text
+
+
+def test_delete_user():
+    credentials = test_login_user()
+    print(f'credentials {credentials}')
+
+    response = client.delete(
+        f'/api/v1/user/{3}',
         headers={
             "token": credentials['access_token']
         }
