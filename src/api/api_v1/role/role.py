@@ -7,20 +7,20 @@ from schemas.response import Response_SM
 from schemas.rol import ListRol, RolBase, Rol
 from .controller import (
     get_all_rol_cn, create_rol_cn,
-    update_rol_cn, delete_rol_cn
+    update_rol_cn, delete_rol_cn, get_rol_cn
 )
 router = APIRouter()
 
+#Document
 
-@router.get('/roles', response_model=ListRol)
+@router.get('/role/{id}', response_model=Rol)
 def get_all_roles(
-    page: int,
+    id: int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
-    rol = get_all_rol_cn(page, db)
-    return rol
-
+    role = get_rol_cn(id, db)
+    return role
 
 @router.post('/role', response_model=Response_SM)
 def create_role(
@@ -46,7 +46,7 @@ def update_role(
     return response
 
 
-@router.delete('/role', response_model=Response_SM)
+@router.delete('/role/{id}', response_model=Response_SM)
 def delete_role(
     id: int,
     db: Session = Depends(get_db),
@@ -56,3 +56,13 @@ def delete_role(
     if not response.status:
         raise HTTPException(status_code=400, detail=response.result)
     return response
+
+
+@router.get('/roles', response_model=ListRol)
+def get_all_roles(
+    page: int,
+    db: Session = Depends(get_db),
+    current_user: UserCreate = Depends(get_admin_user)
+):
+    rol = get_all_rol_cn(page, db)
+    return rol

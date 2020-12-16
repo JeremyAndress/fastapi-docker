@@ -6,6 +6,10 @@ from schemas.response import Response_SM
 from models import Rol
 
 
+def get_rol_cn(id:int, db: Session):
+    return db.query(Rol).filter(Rol.id == id).first()
+
+
 def get_all_rol_cn(page: int, db: Session):
     rol = paginate(db.query(Rol), page, 10)
     return rol

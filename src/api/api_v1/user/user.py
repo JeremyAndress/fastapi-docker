@@ -12,6 +12,20 @@ from .controller import (
 )
 router = APIRouter()
 
+#Controller
+
+@router.post("/login/", response_model=TokenUser, tags=["auth"])
+def login(user: Login, db: Session = Depends(get_db)):
+    user = authenticate(db, user.username, user.password)
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+    return {
+        "access_token": create_access_token(user.username),
+        "token_type": "bearer",
+        "rol_id": user.rol.id if user.rol else None,
+        "rol_name": user.rol.name if user.rol else None
+    }
+
 #Document
 
 @router.get("/user/{id}", response_model=UserList, tags=["user"])
@@ -65,16 +79,3 @@ def get_all_user(
     user = get_all_user_cn(page, db)
     return user
 
-#Controller
-
-@router.post("/login/", response_model=TokenUser, tags=["user"])
-def login(user: Login, db: Session = Depends(get_db)):
-    user = authenticate(db, user.username, user.password)
-    if not user:
-        raise HTTPException(status_code=400, detail="Incorrect email or password")
-    return {
-        "access_token": create_access_token(user.username),
-        "token_type": "bearer",
-        "rol_id": user.rol.id if user.rol else None,
-        "rol_name": user.rol.name if user.rol else None
-    }
