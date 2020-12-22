@@ -17,6 +17,7 @@ class UserCreate(Login):
 
 class UserList(UserCreate):
     id: int
+    password: Optional[str]
 
     class Config:
         orm_mode = True

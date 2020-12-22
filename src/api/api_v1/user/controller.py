@@ -67,14 +67,26 @@ def update_user_cn(upd_user: UserList, db: Session):
     try:
         user = db.query(User).filter(User.id == upd_user.id).update({
             User.rol_id: upd_user.rol_id,
-            User.password: get_password_hash(upd_user.password),
             User.username: upd_user.username
         })
         db.commit()
         db.flush()
         arsene.status = True if user else False
         arsene.result = 'success' if user else 'user does not exist'
+        if upd_user.password and user:
+            reset_password(user_id=upd_user.id, password=upd_user.password, db=db)
     except Exception as e:
         arsene.result = f'error {e}'
         logger.error(f'error {e}')
     return arsene
+
+def reset_password(*, user_id:int ,password:str, db:Session):
+    try:
+        logger.info('reset password')
+        user = db.query(User).filter(User.id == user_id).update({
+            User.password: get_password_hash(password)
+        })
+        db.commit()
+        db.flush()
+    except Exception as e:
+        logger.error(f'error {e}')
