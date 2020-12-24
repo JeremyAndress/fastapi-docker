@@ -1,5 +1,5 @@
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from .response import Pagination
 
 
@@ -9,13 +9,15 @@ class UserBase(BaseModel):
 
 class Login(UserBase):
     password: str
+    email: Optional[EmailStr]
 
 
 class UserCreate(Login):
     rol_id: Optional[int]
+    email: EmailStr
 
 
-class UserList(UserCreate):
+class UserUpdate(UserCreate):
     id: int
     password: Optional[str]
 
@@ -23,8 +25,15 @@ class UserList(UserCreate):
         orm_mode = True
 
 
+class User(UserUpdate):
+    password: str
+
+    class Config:
+        orm_mode = True
+
+
 class UserListPag(Pagination):
-    data: List[UserList]
+    data: List[User]
 
     class Config:
         orm_mode = True

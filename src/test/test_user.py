@@ -28,6 +28,7 @@ def test_create_user():
         json={
             "username": "jeremy",
             "password": "jeremy",
+            "email": "jeremy@gmail.com",
             "rol_id": 1
         }
     )
@@ -44,6 +45,7 @@ def test_create_multiple_user():
             json={
                 "username": fake.name(),
                 "password": fake.name(),
+                "email": fake.email(),
                 "rol_id": 1
             }
         )

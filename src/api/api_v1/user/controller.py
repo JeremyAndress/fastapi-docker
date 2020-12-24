@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from utils.logging import logger
 from utils.pagination import paginate
 from models import User
-from schemas.user import UserCreate, UserList
+from schemas.user import UserCreate, UserUpdate
 from schemas.response import Response_SM
 from core.security import verify_password, get_password_hash
 
@@ -29,6 +29,7 @@ def create_user(db: Session, obj_in: UserCreate):
     try:
         db_obj = User(
             username=obj_in.username,
+            email=obj_in.email,
             password=get_password_hash(obj_in.password),
             rol_id=obj_in.rol_id
         )
@@ -62,12 +63,13 @@ def delete_user_cn(id: int, db: Session):
     return arsene
 
 
-def update_user_cn(upd_user: UserList, db: Session):
+def update_user_cn(upd_user: UserUpdate, db: Session):
     arsene = Response_SM(status=False, result='...')
     try:
         user = db.query(User).filter(User.id == upd_user.id).update({
             User.rol_id: upd_user.rol_id,
-            User.username: upd_user.username
+            User.username: upd_user.username,
+            User.email: upd_user.email
         })
         db.commit()
         db.flush()

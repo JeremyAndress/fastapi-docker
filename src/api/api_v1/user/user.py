@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 from db.session import get_db
-from schemas.user import UserCreate, UserList, UserListPag, Login
+from schemas.user import UserCreate, UserUpdate, UserListPag, Login
 from schemas.response import Response_SM
 from schemas.token import TokenUser
 from core.security import create_access_token
@@ -28,7 +28,7 @@ def login(user: Login, db: Session = Depends(get_db)):
 
 #Document
 
-@router.get("/user/{id}", response_model=UserList, tags=["user"])
+@router.get("/user/{id}", response_model=UserUpdate, tags=["user"])
 def user_get(
     id: int, 
     db: Session = Depends(get_db),
@@ -59,7 +59,7 @@ def delete_user(
 
 @router.put("/user", response_model=Response_SM, tags=["user"])
 def update_user(
-    upd_user: UserList,
+    upd_user: UserUpdate,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
