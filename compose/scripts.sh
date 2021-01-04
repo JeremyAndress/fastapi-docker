@@ -1,8 +1,9 @@
-# TIME ZONE
-apk add --update tzdata
+#!/bin/sh
+
 # PACKAGE
 apk update && apk add --no-cache gcc make \
-    python3-dev
+    python3-dev tzdata
+
 # DATABASE PACKAGE
 if [ $MYSQL_SERVER ]
 then
