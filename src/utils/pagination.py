@@ -1,5 +1,7 @@
+import os
 import math
 
+page_size = int(os.getenv('PAGINATOR_SIZE', 20 ))
 
 class Page(object):
 
@@ -21,7 +23,7 @@ class Page(object):
         self.pages = int(math.ceil(total / float(page_size)))
 
 
-def paginate(query, page, page_size):
+def paginate(query, page, page_size=page_size):
     if page <= 0:
         raise AttributeError('page needs to be >= 1')
     if page_size <= 0:

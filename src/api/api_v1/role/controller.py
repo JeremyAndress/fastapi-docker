@@ -11,7 +11,7 @@ def get_rol_cn(id:int, db: Session):
 
 
 def get_all_rol_cn(page: int, db: Session):
-    rol = paginate(db.query(Rol), page, 10)
+    rol = paginate(db.query(Rol), page)
     return rol
 
 
