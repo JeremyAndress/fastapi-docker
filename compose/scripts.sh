@@ -1,7 +1,7 @@
-#!/bin/sh
+#! /usr/bin/env bash
 
 # PACKAGE
-apk update && apk add --no-cache gcc make \
+apk add --no-cache gcc make \
     python3-dev tzdata
 
 # DATABASE PACKAGE

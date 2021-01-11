@@ -8,6 +8,7 @@ ENV APP_HOME=/home/app/web
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
+RUN apk update && apk add --no-cache bash
 ADD /compose/scripts.sh $APP_HOME
 ADD /requirements/$ENVTYPE.txt $APP_HOME
 RUN chmod +x scripts.sh

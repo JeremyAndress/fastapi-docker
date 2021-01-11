@@ -14,6 +14,7 @@ RUN chmod +x scripts.sh
 
 RUN export https_proxy=http://10.46.0.210:3128; \
     export http_proxy=http://10.46.0.210:3128; \
+    apk update && apk add --no-cache bash ;\
     ./scripts.sh; \
     pip install -r /home/app/web/$ENVTYPE.txt; mkdir /log; \
     unset https_proxy; \
