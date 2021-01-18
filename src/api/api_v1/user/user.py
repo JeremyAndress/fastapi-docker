@@ -1,30 +1,16 @@
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 from db.session import get_db
-from schemas.user import UserCreate, UserUpdate, UserListPag, Login
+from schemas.user import UserCreate, UserUpdate, UserListPag
 from schemas.response import Response_SM
 from schemas.token import TokenUser
 from core.security import create_access_token
 from api.deps import get_admin_user
 from .controller import (
-    create_user, authenticate, get_user_cn,
+    create_user, get_user_cn,
     get_all_user_cn, delete_user_cn, update_user_cn
 )
 router = APIRouter()
-
-#Controller
-
-@router.post("/login/", response_model=TokenUser, tags=["auth"])
-def login(user: Login, db: Session = Depends(get_db)):
-    user = authenticate(db, user.username, user.password)
-    if not user:
-        raise HTTPException(status_code=400, detail="Incorrect email or password")
-    return {
-        "access_token": create_access_token(user.username),
-        "token_type": "bearer",
-        "rol_id": user.rol.id if user.rol else None,
-        "rol_name": user.rol.name if user.rol else None
-    }
 
 #Document
 

@@ -4,24 +4,19 @@ from utils.pagination import paginate
 from models import User
 from schemas.user import UserCreate, UserUpdate
 from schemas.response import Response_SM
-from core.security import verify_password, get_password_hash
+from core.security import get_password_hash
 
 
-def get_by_email(db: Session, username: str):
+def get_by_email(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
+
+
+def get_by_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
 
 def get_user_cn(db: Session, id: int):
     return db.query(User).filter(User.id == id).first()
-
-
-def authenticate(db: Session, username: str, password: str):
-    user = get_by_email(db, username=username)
-    if not user:
-        return None
-    if not verify_password(password, user.password):
-        return None
-    return user
 
 
 def create_user(db: Session, obj_in: UserCreate):

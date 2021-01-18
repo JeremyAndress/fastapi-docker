@@ -7,12 +7,15 @@ class UserBase(BaseModel):
     username: str
 
 
-class Login(UserBase):
+class Login(BaseModel):
+    username: Optional[str]
     password: str
     email: Optional[EmailStr]
 
 
-class UserCreate(Login):
+class UserCreate(UserBase):
+    username: str
+    password: str
     rol_id: Optional[int]
     email: EmailStr
 
