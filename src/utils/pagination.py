@@ -1,6 +1,6 @@
-import os
 import math
 from core.config import settings
+
 
 class Page(object):
 

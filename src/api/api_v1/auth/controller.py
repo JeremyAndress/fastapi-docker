@@ -5,13 +5,13 @@ from core.security import verify_password
 
 
 def authenticate(
-    db: Session, *, username: Optional[str] = None, 
-    password: str, email: Optional[str]=None
+    db: Session, *, username: Optional[str] = None,
+    password: str, email: Optional[str] = None
 ):
     user = get_by_username(
         db, username=username
     ) if username else get_by_email(db, email)
-    
+
     if not user:
         return None
     if not verify_password(password, user.password):

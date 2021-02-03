@@ -23,6 +23,8 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+
 def get_url():
     POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER", None)
     MYSQL_SERVER: str = os.getenv('MYSQL_SERVER', None)
@@ -36,7 +38,7 @@ def get_url():
         password: str = os.getenv("POSTGRES_PASSWORD", "")
         db: str = os.getenv("POSTGRES_DB", "app")
         return f"postgresql://{user}:{password}@{POSTGRES_SERVER}/{db}"
-    
+
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.

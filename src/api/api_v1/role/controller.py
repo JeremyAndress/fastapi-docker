@@ -6,7 +6,7 @@ from schemas.response import Response_SM
 from models import Rol
 
 
-def get_rol_cn(id:int, db: Session):
+def get_rol_cn(id: int, db: Session):
     return db.query(Rol).filter(Rol.id == id).first()
 
 

@@ -77,10 +77,11 @@ def update_user_cn(upd_user: UserUpdate, db: Session):
         logger.error(f'error {e}')
     return arsene
 
-def reset_password(*, user_id:int ,password:str, db:Session):
+
+def reset_password(*, user_id: int, password: str, db: Session):
     try:
         logger.info('reset password')
-        user = db.query(User).filter(User.id == user_id).update({
+        db.query(User).filter(User.id == user_id).update({
             User.password: get_password_hash(password)
         })
         db.commit()

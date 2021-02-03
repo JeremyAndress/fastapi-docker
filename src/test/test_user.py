@@ -7,6 +7,7 @@ from test import (
 
 fake = Faker()
 
+
 @pytest.mark.run(order=0)
 @pytest.mark.dependency
 def test_create_rol():

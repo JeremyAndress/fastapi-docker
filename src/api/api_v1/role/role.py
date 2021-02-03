@@ -11,16 +11,18 @@ from .controller import (
 )
 router = APIRouter()
 
-#Document
+# Document
+
 
 @router.get('/role/{id}', response_model=Rol)
-def get_all_roles(
+def get_rol(
     id: int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
     role = get_rol_cn(id, db)
     return role
+
 
 @router.post('/role', response_model=Response_SM)
 def create_role(

@@ -3,8 +3,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from db.session import get_db
 from schemas.user import UserCreate, UserUpdate, UserListPag
 from schemas.response import Response_SM
-from schemas.token import TokenUser
-from core.security import create_access_token
 from api.deps import get_admin_user
 from .controller import (
     create_user, get_user_cn,
@@ -12,16 +10,18 @@ from .controller import (
 )
 router = APIRouter()
 
-#Document
+# Document
+
 
 @router.get("/user/{id}", response_model=UserUpdate, tags=["user"])
 def user_get(
-    id: int, 
+    id: int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
     user = get_user_cn(db, id)
     return user
+
 
 @router.post("/user", response_model=Response_SM, tags=["user"])
 def user_create(user: UserCreate, db: Session = Depends(get_db)):
@@ -54,7 +54,8 @@ def update_user(
         raise HTTPException(status_code=400, detail=response.result)
     return response
 
-#Collection
+# Collection
+
 
 @router.get("/users", response_model=UserListPag, tags=["user"])
 def get_all_user(
@@ -64,4 +65,3 @@ def get_all_user(
 ):
     user = get_all_user_cn(page, db)
     return user
-

@@ -1,6 +1,7 @@
 from db.session import SessionLocal
 from utils.logging import logger
 
+
 def init() -> None:
     try:
         db = SessionLocal()
@@ -9,6 +10,7 @@ def init() -> None:
     except Exception as e:
         logger.error(e)
         raise e
+
 
 def main() -> None:
     logger.info("Initializing service")
