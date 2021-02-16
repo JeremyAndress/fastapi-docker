@@ -24,7 +24,7 @@ def get_rol(
     return role
 
 
-@router.post('/role', response_model=Response_SM)
+@router.post('/role', response_model=Response_SM, status_code=201)
 def create_role(
     rol: RolBase,
     db: Session = Depends(get_db),

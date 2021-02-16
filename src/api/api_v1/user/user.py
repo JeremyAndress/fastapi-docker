@@ -23,7 +23,7 @@ def user_get(
     return user
 
 
-@router.post("/user", response_model=Response_SM, tags=["user"])
+@router.post("/user", response_model=Response_SM, status_code=201, tags=["user"])
 def user_create(user: UserCreate, db: Session = Depends(get_db)):
     response = create_user(db, user)
     if not response.status:

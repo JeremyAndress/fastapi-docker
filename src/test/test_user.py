@@ -34,7 +34,7 @@ def test_create_user():
         }
     )
     print(response.text)
-    assert response.status_code == 200, response.text
+    assert response.status_code == 201, response.text
 
 
 @pytest.mark.run(order=2)
@@ -51,7 +51,7 @@ def test_create_multiple_user():
             }
         )
         print(response.text)
-        assert response.status_code == 200, response.text
+        assert response.status_code == 201, response.text
 
 
 @pytest.mark.dependency(depends=['test_create_user'])
