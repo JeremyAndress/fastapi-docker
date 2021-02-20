@@ -15,4 +15,4 @@ logging.basicConfig(
     datefmt='%d/%m/%Y %H:%M:%S'
 )
 
-logger = logging.getLogger("fastapiauth")
+logger = logging.getLogger('fastapidocker')

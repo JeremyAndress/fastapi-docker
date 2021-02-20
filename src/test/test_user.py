@@ -27,10 +27,10 @@ def test_create_user():
     response = client.post(
         '/api/v1/user',
         json={
-            "username": "jeremy",
-            "password": "jeremy",
-            "email": "jeremy@gmail.com",
-            "rol_id": 1
+            'username': 'jeremy',
+            'password': 'jeremy',
+            'email': 'jeremy@gmail.com',
+            'rol_id': 1
         }
     )
     print(response.text)
@@ -44,10 +44,10 @@ def test_create_multiple_user():
         response = client.post(
             '/api/v1/user',
             json={
-                "username": fake.name(),
-                "password": fake.name(),
-                "email": fake.email(),
-                "rol_id": 1
+                'username': fake.name(),
+                'password': fake.name(),
+                'email': fake.email(),
+                'rol_id': 1
             }
         )
         print(response.text)
@@ -59,8 +59,8 @@ def test_login_user():
     response = client.post(
         '/api/v1/login/',
         json={
-            "username": "jeremy",
-            "password": "jeremy"
+            'username': 'jeremy',
+            'password': 'jeremy'
         }
     )
     assert response.status_code == 200, response.text
@@ -76,7 +76,7 @@ def test_get_all_user():
     response = client.get(
         '/api/v1/users?page=1',
         headers={
-            "token": credentials['access_token']
+            'token': credentials['access_token']
         }
     )
     print(f'response {response.text}')
@@ -90,7 +90,7 @@ def test_delete_user():
     response = client.delete(
         f'/api/v1/user/{3}',
         headers={
-            "token": credentials['access_token']
+            'token': credentials['access_token']
         }
     )
     print(f'response {response.text}')

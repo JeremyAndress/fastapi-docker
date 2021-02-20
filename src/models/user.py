@@ -9,5 +9,5 @@ class User(Base):
     username = Column(String(25), unique=True, index=True)
     email = Column(String(255), unique=True, index=True, nullable=False)
     password = Column(String(255))
-    rol_id = Column(Integer, ForeignKey("rol.id", onupdate='CASCADE', ondelete='RESTRICT'), nullable=True)
-    rol = relationship("Rol")
+    rol_id = Column(Integer, ForeignKey('rol.id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=True)
+    rol = relationship('Rol')

@@ -10,15 +10,15 @@ from .api_v1.user.controller import get_by_username
 
 credentials_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
-    detail="Could not validate credentials",
-    headers={"WWW-Authenticate": "Bearer"},
+    detail='Could not validate credentials',
+    headers={'WWW-Authenticate': 'Bearer'},
 )
 
 
 def get_token_bearer(token: str = Header(...)):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        username: str = payload.get("sub")
+        username: str = payload.get('sub')
         if username is None:
             raise credentials_exception
         token_data = TokenData(username=username)
@@ -51,5 +51,5 @@ def get_admin_user(
 
 def get_current_active_user(current_user: UserCreate = Depends(get_current_user)):
     if not current_user:
-        raise HTTPException(status_code=400, detail="Inactive user")
+        raise HTTPException(status_code=400, detail='Inactive user')
     return current_user

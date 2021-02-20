@@ -13,7 +13,7 @@ router = APIRouter()
 # Document
 
 
-@router.get("/user/{id}", response_model=UserUpdate, tags=["user"])
+@router.get('/user/{id}', response_model=UserUpdate, tags=['user'])
 def user_get(
     id: int,
     db: Session = Depends(get_db),
@@ -23,7 +23,7 @@ def user_get(
     return user
 
 
-@router.post("/user", response_model=Response_SM, status_code=201, tags=["user"])
+@router.post('/user', response_model=Response_SM, status_code=201, tags=['user'])
 def user_create(user: UserCreate, db: Session = Depends(get_db)):
     response = create_user(db, user)
     if not response.status:
@@ -31,7 +31,7 @@ def user_create(user: UserCreate, db: Session = Depends(get_db)):
     return response
 
 
-@router.delete("/user/{id}", response_model=Response_SM, tags=["user"])
+@router.delete('/user/{id}', response_model=Response_SM, tags=['user'])
 def delete_user(
     id: int,
     db: Session = Depends(get_db),
@@ -43,7 +43,7 @@ def delete_user(
     return response
 
 
-@router.put("/user", response_model=Response_SM, tags=["user"])
+@router.put('/user', response_model=Response_SM, tags=['user'])
 def update_user(
     upd_user: UserUpdate,
     db: Session = Depends(get_db),
@@ -57,7 +57,7 @@ def update_user(
 # Collection
 
 
-@router.get("/users", response_model=UserListPag, tags=["user"])
+@router.get('/users', response_model=UserListPag, tags=['user'])
 def get_all_user(
     page: int,
     db: Session = Depends(get_db),
