@@ -20,7 +20,7 @@ def get_user_cn(db: Session, id: int):
 
 
 def create_user(db: Session, obj_in: UserCreate):
-    arsene = Response_SM(status=False, result='...')
+    response = Response_SM(status=False, result='...')
     try:
         db_obj = User(
             username=obj_in.username,
@@ -31,12 +31,12 @@ def create_user(db: Session, obj_in: UserCreate):
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
-        arsene.status = True if db_obj.id else False
-        arsene.result = 'success'
+        response.status = True if db_obj.id else False
+        response.result = 'success'
     except Exception as e:
-        arsene.result = f'error {e}'
+        response.result = f'error {e}'
         logger.error(f'error {e}')
-    return arsene
+    return response
 
 
 def get_all_user_cn(page: int, db: Session):
@@ -45,21 +45,21 @@ def get_all_user_cn(page: int, db: Session):
 
 
 def delete_user_cn(id: int, db: Session):
-    arsene = Response_SM(status=False, result='...')
+    response = Response_SM(status=False, result='...')
     try:
         user = db.query(User).filter(User.id == id).delete()
         db.commit()
         db.flush()
-        arsene.status = True if user else False
-        arsene.result = 'success' if user else 'user does not exist'
+        response.status = True if user else False
+        response.result = 'success' if user else 'user does not exist'
     except Exception as e:
-        arsene.result = f'error {e}'
+        response.result = f'error {e}'
         logger.error(f'error {e}')
-    return arsene
+    return response
 
 
 def update_user_cn(upd_user: UserUpdate, db: Session):
-    arsene = Response_SM(status=False, result='...')
+    response = Response_SM(status=False, result='...')
     try:
         user = db.query(User).filter(User.id == upd_user.id).update({
             User.rol_id: upd_user.rol_id,
@@ -68,14 +68,14 @@ def update_user_cn(upd_user: UserUpdate, db: Session):
         })
         db.commit()
         db.flush()
-        arsene.status = True if user else False
-        arsene.result = 'success' if user else 'user does not exist'
+        response.status = True if user else False
+        response.result = 'success' if user else 'user does not exist'
         if upd_user.password and user:
             reset_password(user_id=upd_user.id, password=upd_user.password, db=db)
     except Exception as e:
-        arsene.result = f'error {e}'
+        response.result = f'error {e}'
         logger.error(f'error {e}')
-    return arsene
+    return response
 
 
 def reset_password(*, user_id: int, password: str, db: Session):
