@@ -6,7 +6,6 @@ from db.session import get_db
 from api.deps import get_admin_user
 from schemas.rol import ListRol, RolBase, Rol
 from .service import role_service
-from .controller import get_all_rol_cn
 
 router = APIRouter()
 
@@ -64,5 +63,4 @@ def get_all_roles(
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
-    rol = get_all_rol_cn(page, db)
-    return rol
+    return role_service.get_paginate(db, page=page)

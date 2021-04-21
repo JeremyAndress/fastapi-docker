@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from db.base_class import Base
+from core.config import settings
+from utils.pagination import paginate
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -28,6 +30,11 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self, db: Session, *, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
         return db.query(self.model).offset(skip).limit(limit).all()
+
+    def get_paginate(
+        self, db: Session, *, page: int = 1, page_size: int = settings.PAGE_SIZE
+    ) -> List[ModelType]:
+        return paginate(db.query(self.model), page, page_size)
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
