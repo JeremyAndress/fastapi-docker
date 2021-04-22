@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from utils.logging import logger
-from utils.pagination import paginate
 from models import User
 from schemas.user import UserCreate, UserUpdate
 from schemas.response import Response_SM
