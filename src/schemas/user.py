@@ -1,10 +1,8 @@
 from typing import Optional, List
+
 from pydantic import BaseModel, EmailStr
+
 from .response import Pagination
-
-
-class UserBase(BaseModel):
-    username: str
 
 
 class Login(BaseModel):
@@ -13,26 +11,26 @@ class Login(BaseModel):
     email: Optional[EmailStr]
 
 
-class UserCreate(UserBase):
+class UserInDBBase(BaseModel):
     username: str
-    password: str
     rol_id: Optional[int]
     email: EmailStr
+
+    class Config:
+        orm_mode = True
+
+
+class UserCreate(UserInDBBase):
+    password: str
 
 
 class UserUpdate(UserCreate):
     id: int
     password: Optional[str]
 
-    class Config:
-        orm_mode = True
-
 
 class User(UserUpdate):
     password: str
-
-    class Config:
-        orm_mode = True
 
 
 class UserListPag(Pagination):

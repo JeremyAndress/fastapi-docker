@@ -1,5 +1,5 @@
 from db.crud import CRUDBase
-from models.rol import Rol
+from models import Rol
 from schemas.rol import Rol as RolUpdate, RolBase
 
 

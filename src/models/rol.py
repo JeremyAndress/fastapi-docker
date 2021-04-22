@@ -5,4 +5,4 @@ from sqlalchemy import Column, Integer, String
 class Rol(Base):
     __tablename__ = 'rol'
     id = Column(Integer, primary_key=True)
-    name = Column(String(25))
+    name = Column(String(30), unique=True)

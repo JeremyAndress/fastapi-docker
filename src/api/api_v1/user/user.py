@@ -1,26 +1,26 @@
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
+
 from db.session import get_db
-from schemas.user import UserCreate, UserUpdate, UserListPag
-from schemas.response import Response_SM
+
+from .service import user_service
 from api.deps import get_admin_user
-from .controller import (
-    create_user, get_user_cn,
-    get_all_user_cn, delete_user_cn, update_user_cn
-)
+from schemas.response import Response_SM
+from .controller import create_user, update_user_cn
+from schemas.user import UserCreate, UserUpdate, UserListPag, UserInDBBase
+
 router = APIRouter()
 
 # Document
 
 
-@router.get('/user/{id}', response_model=UserUpdate, tags=['user'])
+@router.get('/user/{id}', response_model=UserInDBBase, tags=['user'])
 def user_get(
     id: int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
-    user = get_user_cn(db, id)
-    return user
+    return user_service.get(db, id)
 
 
 @router.post('/user', response_model=Response_SM, status_code=201, tags=['user'])
@@ -31,16 +31,13 @@ def user_create(user: UserCreate, db: Session = Depends(get_db)):
     return response
 
 
-@router.delete('/user/{id}', response_model=Response_SM, tags=['user'])
+@router.delete('/user/{id}', response_model=UserInDBBase, tags=['user'])
 def delete_user(
     id: int,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
-    response = delete_user_cn(id, db)
-    if not response.status:
-        raise HTTPException(status_code=400, detail=response.result)
-    return response
+    return user_service.remove(db, id=id)
 
 
 @router.put('/user', response_model=Response_SM, tags=['user'])
@@ -63,5 +60,4 @@ def get_all_user(
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
-    user = get_all_user_cn(page, db)
-    return user
+    return user_service.get_paginate(db, page=page)
