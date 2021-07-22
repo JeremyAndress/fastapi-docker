@@ -20,8 +20,29 @@ services:
         MYSQL_SERVER: ${MYSQL_SERVER:-}
         POSTGRES_SERVER: ${POSTGRES_SERVER:-}
     restart: always
+    depends_on:
+      - db
     volumes:
       - ./src:/home/app/web/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+  db:
+    env_file: .env
+    build: 
+      context: .
+      dockerfile: ./compose/local/mysql.Dockerfile
+      args:
+        MYSQL_USER: ${MYSQL_USER:-}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD:-}
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${MYSQL_DB:-}
+    restart: always
+    ports:
+      - "3306:3306"
     logging:
       driver: "json-file"
       options:
