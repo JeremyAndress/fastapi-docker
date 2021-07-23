@@ -1,11 +1,13 @@
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Depends, Header
+
+from core.role import ROLE
 from db.session import get_db
 from core.config import settings
+from utils.logging import logger
 from schemas.user import UserCreate
 from schemas.token import TokenData
-from utils.logging import logger
 from .api_v1.user.controller import get_by_username
 
 credentials_exception = HTTPException(
@@ -43,8 +45,8 @@ def get_admin_user(
     user = get_by_username(db, username=token_data.username) or {}
     if not user:
         raise credentials_exception
-    rol = getattr(getattr(user, 'rol'), 'id', None)
-    if rol != 1:
+    rol = getattr(getattr(user, 'rol'), 'name', None)
+    if rol != ROLE.ADMIN.value:
         raise credentials_exception
     return user
 
