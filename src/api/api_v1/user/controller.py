@@ -1,17 +1,10 @@
 from sqlalchemy.orm import Session
-from utils.logging import logger
+
 from models import User
-from schemas.user import UserCreate, UserUpdate
+from utils.logging import logger
 from schemas.response import Response_SM
+from schemas.user import UserCreate, UserUpdate
 from core.security import get_password_hash
-
-
-def get_by_email(db: Session, email: str):
-    return db.query(User).filter(User.email == email).first()
-
-
-def get_by_username(db: Session, username: str):
-    return db.query(User).filter(User.username == username).first()
 
 
 def create_user(db: Session, obj_in: UserCreate):
@@ -56,7 +49,6 @@ def update_user_cn(upd_user: UserUpdate, db: Session):
 
 def reset_password(*, user_id: int, password: str, db: Session):
     try:
-        logger.info('reset password')
         db.query(User).filter(User.id == user_id).update({
             User.password: get_password_hash(password)
         })

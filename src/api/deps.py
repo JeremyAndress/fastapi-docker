@@ -8,7 +8,7 @@ from core.config import settings
 from utils.logging import logger
 from schemas.user import UserCreate
 from schemas.token import TokenData
-from .api_v1.user.controller import get_by_username
+from api.api_v1.user.service import user_service
 
 credentials_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
@@ -33,7 +33,7 @@ def get_token_bearer(token: str = Header(...)):
 def get_current_user(
     token_data: str = Depends(get_token_bearer), db: Session = Depends(get_db)
 ):
-    user = get_by_username(db, username=token_data.username)
+    user = user_service.get_by_field(db, field='username', value=token_data.username)
     if not user:
         raise credentials_exception
     return user
@@ -42,7 +42,7 @@ def get_current_user(
 def get_admin_user(
     token_data: str = Depends(get_token_bearer), db: Session = Depends(get_db)
 ):
-    user = get_by_username(db, username=token_data.username) or {}
+    user = user_service.get_by_field(db, field='username', value=token_data.username) or {}
     if not user:
         raise credentials_exception
     rol = getattr(getattr(user, 'rol'), 'name', None)
