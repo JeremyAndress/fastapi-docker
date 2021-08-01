@@ -3,28 +3,8 @@ from sqlalchemy.orm import Session
 from models import User
 from utils.logging import logger
 from schemas.response import Response_SM
-from schemas.user import UserCreate, UserUpdate
+from schemas.user import UserUpdate
 from core.security import get_password_hash
-
-
-def create_user(db: Session, obj_in: UserCreate):
-    response = Response_SM(status=False, result='...')
-    try:
-        db_obj = User(
-            username=obj_in.username,
-            email=obj_in.email,
-            password=get_password_hash(obj_in.password),
-            rol_id=obj_in.rol_id
-        )
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        response.status = True if db_obj.id else False
-        response.result = 'success'
-    except Exception as e:
-        response.result = f'error {e}'
-        logger.error(f'error {e}')
-    return response
 
 
 def update_user_cn(upd_user: UserUpdate, db: Session):

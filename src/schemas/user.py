@@ -29,8 +29,8 @@ class UserUpdate(UserCreate):
     password: Optional[str]
 
 
-class User(UserUpdate):
-    password: str
+class User(UserInDBBase):
+    id: int
 
 
 class UserListPag(Pagination):

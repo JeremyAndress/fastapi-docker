@@ -6,15 +6,15 @@ from db.session import get_db
 from .service import user_service
 from api.deps import get_admin_user
 from schemas.response import Response_SM
-from .controller import create_user, update_user_cn
-from schemas.user import UserCreate, UserUpdate, UserListPag, UserInDBBase
+from .controller import update_user_cn
+from schemas.user import UserCreate, UserUpdate, UserListPag, User
 
 router = APIRouter()
 
 # Document
 
 
-@router.get('/user/{id}', response_model=UserInDBBase, tags=['user'])
+@router.get('/user/{id}', response_model=User, tags=['user'])
 def user_get(
     id: int,
     db: Session = Depends(get_db),
@@ -23,15 +23,12 @@ def user_get(
     return user_service.get(db, id)
 
 
-@router.post('/user', response_model=Response_SM, status_code=201, tags=['user'])
+@router.post('/user', response_model=User, status_code=201, tags=['user'])
 def user_create(user: UserCreate, db: Session = Depends(get_db)):
-    response = create_user(db, user)
-    if not response.status:
-        raise HTTPException(status_code=400, detail=response.result)
-    return response
+    return user_service.create(db, obj_in=user)
 
 
-@router.delete('/user/{id}', response_model=UserInDBBase, tags=['user'])
+@router.delete('/user/{id}', response_model=User, tags=['user'])
 def delete_user(
     id: int,
     db: Session = Depends(get_db),
