@@ -1,12 +1,10 @@
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from db.session import get_db
 
 from .service import user_service
 from api.deps import get_admin_user
-from schemas.response import Response_SM
-from .controller import update_user_cn
 from schemas.user import UserCreate, UserUpdate, UserListPag, User
 
 router = APIRouter()
@@ -37,16 +35,13 @@ def delete_user(
     return user_service.remove(db, id=id)
 
 
-@router.put('/user', response_model=Response_SM, tags=['user'])
+@router.put('/user', response_model=User, tags=['user'])
 def update_user(
     upd_user: UserUpdate,
     db: Session = Depends(get_db),
     current_user: UserCreate = Depends(get_admin_user)
 ):
-    response = update_user_cn(upd_user, db)
-    if not response.status:
-        raise HTTPException(status_code=400, detail=response.result)
-    return response
+    return user_service.update(db, obj_in=upd_user)
 
 # Collection
 
