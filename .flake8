@@ -3,4 +3,4 @@ exclude =
     .git,
     __pycache__
 max-complexity = 10
-max-line-length= 125 
+max-line-length= 125
