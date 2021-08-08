@@ -19,10 +19,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return db_obj
 
     def update(
-        self,
-        db: Session,
-        *,
-        obj_in: Union[UserUpdate, Dict[str, Any]]
+        self, db: Session,
+        *, obj_in: Union[UserUpdate, Dict[str, Any]]
     ) -> User:
         db_obj = db.query(self.model).get(obj_in.id)
         obj_data = jsonable_encoder(db_obj)
