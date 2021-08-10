@@ -40,7 +40,8 @@ def upgrade():
     op.bulk_insert(
         role_table,
         [
-            {'id': 1, 'name': ROLE.ADMIN.value}
+            {'id': 1, 'name': ROLE.ADMIN.value},
+            {'id': 2, 'name': ROLE.BASIC.value}
         ]
     )
     # ### end Alembic commands ###

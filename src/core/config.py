@@ -1,5 +1,6 @@
 import os
 from typing import Dict, Optional, Any
+
 from pydantic import BaseSettings, validator
 
 
@@ -14,7 +15,7 @@ class Settings(BaseSettings):
     MYSQL_USER: str = os.getenv('MYSQL_USER', 'root')
     MYSQL_PASSWORD: str = os.getenv('MYSQL_PASSWORD', 'password')
     MYSQL_DB: str = os.getenv('MYSQL_DB', 'fastapitest')
-    SQLALCHEMY_DATABASE_URI: Optional[str] = None
+    SQLALCHEMY_DATABASE_URI: Optional[str] = os.getenv('SQLALCHEMY_DATABASE_URI')
 
     @validator('SQLALCHEMY_DATABASE_URI', pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
@@ -23,6 +24,11 @@ class Settings(BaseSettings):
         return f"mysql://{values['MYSQL_USER']}:{values['MYSQL_PASSWORD']}@{values['MYSQL_SERVER']}/{values['MYSQL_DB']}"
 
     PAGE_SIZE: int = int(os.getenv('PAGINATOR_SIZE', 20))
+
+    TEST_USER_USERNAME: str = 'test_user'
+    TEST_USER_PASSWORD: str = 'test_user_password'
+    TEST_SUPER_USER_USERNAME: str = 'test_super_user'
+    TEST_SUPER_USER_PASSWORD: str = 'test_super_user_password'
 
     class Config:
         case_sensitive = True
