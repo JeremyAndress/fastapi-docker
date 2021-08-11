@@ -8,18 +8,18 @@ from core.config import settings
 from core.security import create_access_token
 from db.session import get_db, SessionLocal, engine
 from api.api_v1.auth.controller import authenticate
+from tests.utils.user import create_super_user, create_basic_user # noqa F401
 
-@pytest.fixture(scope="session")
+
+@pytest.fixture
 def test_db():
-    try:
-        Base.metadata.create_all(bind=engine)
-        yield SessionLocal()
-    finally:
-        for tbl in reversed(Base.metadata.sorted_tables):
-            engine.execute(tbl.delete())
+    Base.metadata.create_all(bind=engine)
+    yield SessionLocal()
+    for table in reversed(Base.metadata.sorted_tables):
+        engine.execute(table.delete())
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def create_roles(test_db):
     objects = [
         Rol(id=1, name=ROLE.ADMIN.value),
@@ -29,33 +29,33 @@ def create_roles(test_db):
     test_db.commit()
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def client(test_db):
     def _test_db():
         return test_db
     app.dependency_overrides[get_db] = _test_db
-    with TestClient(app) as client:
-        yield client
+    return TestClient(app)
 
 
-@pytest.fixture(scope="module")
-def create_super_user(client, create_roles):
-    data = {
-        'username': settings.TEST_SUPER_USER_USERNAME,
-        'password': settings.TEST_SUPER_USER_PASSWORD,
-        'email': f'{settings.TEST_SUPER_USER_USERNAME}@gmail.com',
-        'rol_id': 1
-    }
-    response = client.post(
-        '/api/v1/user', json=data
-    )
-    return response.json()
-
-
-@pytest.fixture(scope="module")
-def super_user_token(test_db, create_super_user):
+@pytest.fixture
+def super_user_token(
+    test_db,
+    create_super_user # noqa F811
+):
     if authenticate(
         test_db, username=settings.TEST_SUPER_USER_USERNAME,
         password=settings.TEST_SUPER_USER_PASSWORD
     ):
         return create_access_token(settings.TEST_SUPER_USER_USERNAME)
+
+
+@pytest.fixture
+def basic_user_token(
+    test_db,
+    create_basic_user # noqa F811
+):
+    if authenticate(
+        test_db, username=settings.TEST_USER_USERNAME,
+        password=settings.TEST_USER_PASSWORD
+    ):
+        return create_access_token(settings.TEST_USER_USERNAME)
