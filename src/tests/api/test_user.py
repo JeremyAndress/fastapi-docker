@@ -18,6 +18,21 @@ def test_create_user(client, create_roles):
     assert response_json == expected_data
 
 
+def test_get_user(client, super_user_token):
+    response = client.get(
+        '/api/v1/user/1', headers={
+            'token': super_user_token
+        }
+    )
+    assert response.status_code == 200, response.text
+    response_json = response.json()
+    expected_data = {
+        'username': 'test_super_user', 'rol_id': 1,
+        'email': 'test_super_user@gmail.com', 'id': 1
+    }
+    assert response_json == expected_data
+
+
 def test_get_users(client, super_user_token):
     response = client.get(
         '/api/v1/users?page=1', headers={
