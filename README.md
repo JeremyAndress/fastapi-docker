@@ -33,33 +33,44 @@
 ├── compose
 │   ├── local
 │   ├── production
+│   ├── scripts
 │   └── stage
 ├── nginx
 │   └── site.conf
 ├── requirements
 │   ├── local.txt
-│   └── production.txt
-├── sql
-│   ├── rol.sql
-│   └── user.sql
+│   ├── migrations.txt
+│   ├── mysql.txt
+│   ├── postgre.txt
+│   ├── production.txt
+│   └── test.txt
+├── screenshots
+│   └── ui.png
 ├── src
+│   ├── alembic
 │   ├── api
 │   ├── core
 │   ├── db
 │   ├── logs
 │   ├── models
+│   ├── __pycache__
 │   ├── schemas
-│   ├── test
+│   ├── tests
 │   ├── utils
-│   └── main.py
+│   ├── alembic.ini
+│   ├── main.py
+│   ├── pre_start.py
+│   └── prestart.sh
 ├── CHANGELOG.md
-├── .env
+├── LICENSE
 ├── .env.example
-├── .gitignore
+├── .flake8
 ├── local.yml
 ├── production.yml
+├── pytest.ini
 ├── README.md
 └── stage.yml
+
 ```
 3. `docker-compose -f local.yml build`
 4. `docker-compose -f local.yml up -d`
@@ -71,5 +82,5 @@ You will see the automatic interactive API documentation (provided by Swagger UI
 ## Testing  :rotating_light:
 
 ```python
-    pytest -s -v src/test
+    pytest -vvs src/test
 ```
