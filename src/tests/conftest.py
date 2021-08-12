@@ -1,19 +1,30 @@
 import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from fastapi.testclient import TestClient
 
 from main import app
 from core.role import ROLE
 from models import Base, Rol
+from db.session import get_db
 from core.config import settings
 from core.security import create_access_token
-from db.session import get_db, SessionLocal, engine
 from api.api_v1.auth.controller import authenticate
 from tests.utils.user import create_super_user, create_basic_user # noqa F401
 
 
+engine = create_engine(
+    settings.SQLALCHEMY_DATABASE_URI, pool_pre_ping=True,
+    connect_args={'check_same_thread': False}
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base.metadata.create_all(bind=engine)
+
+
 @pytest.fixture
 def test_db():
-    Base.metadata.create_all(bind=engine)
     yield SessionLocal()
     for table in reversed(Base.metadata.sorted_tables):
         engine.execute(table.delete())
