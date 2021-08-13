@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from .api_v1.user import user
 from .api_v1.role import role
 from .api_v1.auth import auth

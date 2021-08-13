@@ -9,12 +9,13 @@ RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
 RUN apk update && apk add --no-cache bash
-ADD /compose/scripts.sh $APP_HOME
+ADD /compose/scripts/ $APP_HOME
 ADD /requirements/$ENVTYPE.txt $APP_HOME
-RUN chmod +x scripts.sh
+RUN chmod +x db_deps.sh
 
-RUN ./scripts.sh
-RUN pip install -r /home/app/web/$ENVTYPE.txt; mkdir /log;
+RUN ./db_deps.sh
+RUN python -m pip install --upgrade pip
+RUN pip install -r /home/app/web/$ENVTYPE.txt --use-feature=2020-resolver; mkdir /log;
 
 COPY /src/ $APP_HOME
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

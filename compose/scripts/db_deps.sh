@@ -9,7 +9,8 @@ if [ $MYSQL_SERVER ]
 then
     echo "MYSQL DEPENDENCIES..."
     apk add --no-cache mariadb-dev build-base libffi-dev
-elif [ $POSTGRES_SERVER ]
+fi
+if [ $POSTGRES_SERVER ]
 then 
     echo "POSTGRE DEPENDENCIES..."
     apk add --no-cache postgresql-dev musl-dev

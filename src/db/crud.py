@@ -26,6 +26,11 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def get(self, db: Session, id: int) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
 
+    def get_by_field(self, db: Session, field: str, value: Any) -> Optional[ModelType]:
+        return db.query(self.model).filter(
+            getattr(self.model, field) == value
+        ).first()
+
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
