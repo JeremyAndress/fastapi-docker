@@ -1,6 +1,7 @@
 # [FastAPI Docker :rocket:](https://github.com/JeremyAndress/fastapi-docker)
 
-![Test](https://github.com/JeremyAndress/fastapi-docker/workflows/Test/badge.svg?branch=master) [![license](https://img.shields.io/github/license/peaceiris/actions-gh-pages.svg)](LICENSE) 
+![Test](https://github.com/JeremyAndress/fastapi-docker/workflows/Test/badge.svg?branch=master) [![license](https://img.shields.io/github/license/peaceiris/actions-gh-pages.svg)](LICENSE)
+[![Profile](https://img.shields.io/badge/Dev-JeremyAndress-blue)](https://github.com/JeremyAndress)
 
 ## Features :sparkles:
 - [FastAPI](https://fastapi.tiangolo.com/) framework.
@@ -82,5 +83,5 @@ You will see the automatic interactive API documentation (provided by Swagger UI
 ## Testing  :rotating_light:
 
 ```python
-    pytest -vvs src/test
+    pytest -vvs src/tests/
 ```
