@@ -85,3 +85,18 @@ You will see the automatic interactive API documentation (provided by Swagger UI
 ```python
     pytest -vvs src/tests/
 ```
+
+## Migrations
+
+### Generic single-database configuration.
+
+First you need to install dependencies in  requirements/migrations.txt and go to the src folder
+```
+    pip install -r requirements/migrations.txt
+    cd src/
+```
+Then run migrations commands:
+```
+    PYTHONPATH=. alembic revision --autogenerate -m "your comment"
+    PYTHONPATH=. alembic upgrade head
+```

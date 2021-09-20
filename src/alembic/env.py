@@ -3,10 +3,12 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
-# import local_imports
+from dotenv import load_dotenv
+
 from models import Base
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+load_dotenv()
 config = context.config
 
 # Interpret the config file for Python logging.
@@ -26,18 +28,22 @@ target_metadata = Base.metadata
 
 
 def get_url():
+    SQLALCHEMY_DATABASE_URI: str = os.getenv("SQLALCHEMY_DATABASE_URI", None)
+    if SQLALCHEMY_DATABASE_URI: return SQLALCHEMY_DATABASE_URI
+
     POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER", None)
     MYSQL_SERVER: str = os.getenv('MYSQL_SERVER', None)
+
     if MYSQL_SERVER:
         MYSQL_USER: str = os.getenv('MYSQL_USER', 'mysql')
         MYSQL_PASSWORD: str = os.getenv('MYSQL_PASSWORD', 'secret')
         MYSQL_DB: str = os.getenv('MYSQL_DB', 'app')
         return f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_SERVER}/{MYSQL_DB}"
     elif POSTGRES_SERVER:
-        user: str = os.getenv("POSTGRES_USER", "postgres")
-        password: str = os.getenv("POSTGRES_PASSWORD", "")
-        db: str = os.getenv("POSTGRES_DB", "app")
-        return f"postgresql://{user}:{password}@{POSTGRES_SERVER}/{db}"
+        POSTGRES_USER: str = os.getenv("POSTGRES_USER", "postgres")
+        POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "")
+        POSTGRES_DB: str = os.getenv("POSTGRES_DB", "app")
+        return f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}/{POSTGRES_DB}"
 
 
 def run_migrations_offline():

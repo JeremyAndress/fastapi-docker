@@ -1,4 +1,5 @@
 -r local.txt
+-r migrations.txt
 flake8==3.8.4
 pytest==6.2.0
 pytest-dependency==0.5.1
