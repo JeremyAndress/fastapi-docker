@@ -15,6 +15,12 @@ class Settings(BaseSettings):
     MYSQL_USER: str = os.getenv('MYSQL_USER', 'root')
     MYSQL_PASSWORD: str = os.getenv('MYSQL_PASSWORD', 'password')
     MYSQL_DB: str = os.getenv('MYSQL_DB', 'fastapitest')
+
+    POSTGRES_SERVER: str = os.getenv('POSTGRES_SERVER', '30.40.0.10:3307')
+    POSTGRES_USER: str = os.getenv('POSTGRES_USER', 'postgres')
+    POSTGRES_PASSWORD: str = os.getenv('POSTGRES_PASSWORD', '')
+    POSTGRES_DB: str = os.getenv('POSTGRES_DB', 'app')
+
     SQLALCHEMY_DATABASE_URI: Optional[str] = os.getenv('SQLALCHEMY_DATABASE_URI')
 
     @validator('SQLALCHEMY_DATABASE_URI', pre=True)

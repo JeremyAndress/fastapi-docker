@@ -17,6 +17,7 @@ services:
       context: .
       dockerfile: ./compose/local/core.Dockerfile
       args:
+        SQLALCHEMY_DATABASE_URI: ${SQLALCHEMY_DATABASE_URI:-}
         MYSQL_SERVER: ${MYSQL_SERVER:-}
         POSTGRES_SERVER: ${POSTGRES_SERVER:-}
     restart: always
