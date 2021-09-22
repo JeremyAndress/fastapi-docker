@@ -18,7 +18,7 @@
 ## Requirements :pushpin:
 - Docker :whale:
 - docker-compose :whale:
-- Python 3.6+ :snake: **To use without docker**
+- Python 3.6+ :snake: **To use without docker.** *Not recommended for use with windows*
 
 ## Quick Start :seedling:
 
@@ -88,11 +88,25 @@ You will see the automatic interactive API documentation (provided by Swagger UI
 
 ## Migrations
 
-### Generic single-database configuration.
+### Generic single-database configuration with docker.
+First it is necessary to enter the container
 
-First you need to install dependencies in  requirements/migrations.txt and go to the src folder
 ```
-    pip install -r requirements/migrations.txt
+docker-compose -f local.yml run core bash
+```
+
+Then it is necessary to run the following commands
+
+```
+    PYTHONPATH=. alembic revision --autogenerate -m "your comment"
+    PYTHONPATH=. alembic upgrade head
+```
+
+### Generic single-database configuration without docker.
+
+First you need to install dependencies in requirements/local.txt and go to the src folder
+```
+    pip install -r requirements/local.txt
     cd src/
 ```
 Then run migrations commands:
